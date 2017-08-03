@@ -114,14 +114,15 @@ def getmysqldata(query):
 '''
 def getmysqlusage(month, users='*'):
   import simpletemplate as st
-
+  
+  if users==[]:
+    return 0.0
   monthstr = mysqlmonth(month)
   emonthstr = mysqlmonth(incrementmonth(month))
   
   # These are the keys in the file that will be replaced.
-  keys = {'%DB%':'thomas_sgelogs', '%START%':monthstr, '%STOP%':emonthstr '%ONLIMITS%':onlimits(users=users)}
+  keys = {'%DB%':'thomas_sgelogs', '%START%':monthstr, '%STOP%':emonthstr, '%ONLIMITS%':onlimits(users=users)}
   query = st.templatefile(filename="sql/usage-opts.sql", keys=keys)
-
   # The data is returned as a tuple inside a list for reasons.  Yank it out and
   # convert to hours from seconds.
   output = float(getmysqldata(query)[0][0])/3600.0
@@ -136,8 +137,10 @@ def getusers(institute):
   keys = {'%INSTITUTE%':institute}
   query = st.templatefile(filename="sql/ist-to-users.sql", keys=keys)
   output = getmysqldata(query)
-  print(output)  
-  return ['uccaoke']
+  retval = []
+  for a in output:
+    retval.append(a[0])
+  return retval
 
 '''
     Get a list of institutions from Heather's DB.
@@ -145,8 +148,10 @@ def getusers(institute):
 def getinstitutes():
   query = "select inst_id from thomas.institutes"
   output = getmysqldata(query)
-  print(output)
-  return ['UCL']
+  retval = []
+  for a in output:
+    retval.append(a[0])
+  return retval
 
 
 '''
@@ -167,8 +172,8 @@ def main():
   institutes = getinstitutes()
   for a in institutes:
     users = getusers(a)
-#    usage = getmysqlusage(month, users)
-#    print(a + " SGE usage: " + str(usage))
+    usage = getmysqlusage(month, users)
+    print(a + " SGE usage: " + str(usage))
 
 '''
     *sigh*
