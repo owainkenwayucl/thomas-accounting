@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # This script uses gstatement (on Thomas itself a wrapper) to get a report of usage.
-# It pulls the Charge rows out of this and passes the cost to fpsum
+# It pulls the Charge rows for an institute out of this and passes the cost to fpsum
 # https://github.com/owainkenwayucl/utils/blob/master/src/fpsum.f
 # which is a simple program that sums all the numbers passed to it via stdin
 # and then puts the output in stdout.

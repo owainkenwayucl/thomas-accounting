@@ -16,3 +16,4 @@ Current tools:
 
  * `get-accounting <year> <month>` - this looks at the Gold database to get the amount of credits spent in a particular month, and then at the `thomas_sgelogs` database to get the number of CPU hours used in that month and then combines the two to work out the % of usage that was paid (high priority) vs. free.
 
+ * `get-institutional-accounting <year> <month>` - this looks at the `thomas` database to get a list of users at each institute, at the Gold database to get the amount of credits spent by that institute in a particular month, and then at the `thomas_sgelogs` database to get the number of CPU hours used by those users in that month and then combines the two to work out the % of usage that was paid (high priority) vs. free.  It's incorrect where a user is at more than one institute.

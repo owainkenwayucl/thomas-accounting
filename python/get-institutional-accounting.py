@@ -1,5 +1,18 @@
 #!/usr/bin/env python3
+''' 
+    This is a fundamentally terrible piece of programming.
+    If this is still in use in 2018 something has gone wrong.
 
+    Anyway, this is a main script that calls out to other things that:
+      0. Gets a list of users for each institute.
+      1. Gets the amount of credit charged to that institute in Gold.
+      2. Gets the number of CPU hours recorded in the thomas SGE logs DB for those users.
+      3. Uses these to estimate ratio of paid to unpaid usage for a given month.
+
+    THIS IS WRONG WHEN A USER IS AT MULTIPLE INSTITUTES.
+
+    Dates are a list of ints [year, month] for reasons.
+'''
 '''
     Have a standardised way of incrementing months, unlike that *other*
     RCAS stats code.
@@ -124,6 +137,7 @@ def getmysqlusage(month, users='*'):
   # These are the keys in the file that will be replaced.
   keys = {'%DB%':'thomas_sgelogs', '%START%':monthstr, '%STOP%':emonthstr, '%ONLIMITS%':onlimits(users=users)}
   query = st.templatefile(filename="sql/usage-opts.sql", keys=keys)
+
   # The data is returned as a tuple inside a list for reasons.  Yank it out and
   # convert to hours from seconds.
   output = float(getmysqldata(query)[0][0])/3600.0
@@ -141,6 +155,9 @@ def getusers(institute):
   retval = []
   for a in output:
     retval.append(a[0])
+
+  # UNIQUE!
+  retval = list(set(retval))
   return retval
 
 '''
