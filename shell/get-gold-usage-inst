@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# This script uses gstatement (on Thomas itself a wrapper) to get a report of usage.
+# It pulls the Charge rows out of this and passes the cost to fpsum
+# https://github.com/owainkenwayucl/utils/blob/master/src/fpsum.f
+# which is a simple program that sums all the numbers passed to it via stdin
+# and then puts the output in stdout.
+
+usage=`gstatement -h -s $1 -e $2 --summarize | grep "${3}_" |grep "Charge" | awk '{print $6}' | fpsum`
+
+# Because of the format of the statement Gold produces, the total charge is a negative
+# number.  Use dc to multiply it by -1.
+
+dc -e "-1 ${usage} * p" 2>/dev/null

@@ -70,6 +70,7 @@ def mysqlmonth(month):
 '''
 def getgoldusage(month, institute):
   import subprocess
+
   endmonth = incrementmonth(month)
   gargs = ["./shell/get-gold-usage-inst", goldmonth(month),  goldmonth(endmonth), institute]
   usage = float(subprocess.check_output(gargs))
@@ -173,7 +174,8 @@ def main():
   for a in institutes:
     users = getusers(a)
     usage = getmysqlusage(month, users)
-    print(a + " SGE usage: " + str(usage))
+    gusage = getgoldusage(month, a)
+    print(a + " SGE usage: " + str(usage) + " Gold usage: " + str(gusage))
 
 '''
     *sigh*
