@@ -154,12 +154,29 @@ def getinstitutes():
     retval.append(a[0])
   return retval
 
+'''
+    Print a nice report.
+'''
+def printreport(institute, gusage, musage):
+  print("\n" + institute + "\n")
+  print("Paid usage (hours): %.2f" % gusage)
+  print("SGE usage (hours): %.2f" % musage)
+
+  if (musage <=0 ):
+    percentpaid=0.0
+  else:
+    percentpaid=100.0*(gusage/musage)
+  percentfree=100.0-percentpaid
+
+  print("")
+  print("%% Paid: %.2f" % percentpaid)
+  print("%% Free: %.2f" % percentfree)  
+  print("")
 
 '''
     Our "not actually a main procedure because this is python". 
     Syntax is very simple - single argument each for year, month.
 '''
-
 def main():
   import sys
 
@@ -175,7 +192,7 @@ def main():
     users = getusers(a)
     usage = getmysqlusage(month, users)
     gusage = getgoldusage(month, a)
-    print(a + " SGE usage: " + str(usage) + " Gold usage: " + str(gusage))
+    printreport(a, gusage, usage)
 
 '''
     *sigh*
