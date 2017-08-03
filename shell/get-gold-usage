@@ -1,0 +1,5 @@
+#!/bin/bash
+
+usage=`gstatement -h -s $1 -e $2 --summarize | grep "Charge" | awk '{print $6}' | fpsum`
+#echo $usage
+dc -e "-1 ${usage} * p" 2>/dev/null
