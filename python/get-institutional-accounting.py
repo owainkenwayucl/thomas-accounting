@@ -174,21 +174,11 @@ def getinstitutes():
 '''
     Print a nice report.
 '''
-def printreport(institute, gusage, musage):
-  print("\n" + institute + "\n")
-  print("Paid usage (hours): %.2f" % gusage)
-  print("SGE usage (hours): %.2f" % musage)
-
-  if (musage <=0 ):
-    percentpaid=0.0
-  else:
-    percentpaid=100.0*(gusage/musage)
-  percentfree=100.0-percentpaid
-
-  print("")
-  print("%% Paid: %.2f" % percentpaid)
-  print("%% Free: %.2f" % percentfree)  
-  print("")
+def printreport(data):
+  for i in data:
+    for j in i:
+      print(j, end=", ")
+    print("")
 
 '''
     Our "not actually a main procedure because this is python". 
@@ -226,9 +216,8 @@ def main():
     item.append(percentpaid)
     item.append(percentfree)
     dataset.append(item)
-    #printreport(a, gusage, usage)
 
-  print(dataset)
+  printreport(dataset)
 
 '''
     *sigh*
