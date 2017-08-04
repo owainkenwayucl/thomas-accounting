@@ -197,7 +197,7 @@ def main():
   institutes = getinstitutes()
 
   dataset = []
-  dataset.append(["Institution", "SoGE usage", "Gold charging", "%% paid", "%% free"])
+  dataset.append(["Institution", "SoGE usage", "Gold charging", "% paid", "% free"])
   for a in institutes:
     item = []
     item.append(a)
