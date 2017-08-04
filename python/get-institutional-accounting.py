@@ -205,11 +205,30 @@ def main():
 
   # Get a list of institutes.
   institutes = getinstitutes()
+
+  dataset = []
+  dataset.append(["Institution", "SoGE usage", "Gold charging", "%% paid", "%% free"])
   for a in institutes:
+    item = []
+    item.append(a)
     users = getusers(a)
     usage = getmysqlusage(month, users)
     gusage = getgoldusage(month, a)
-    printreport(a, gusage, usage)
+    item.append(usage)
+    item.append(gusage)
+
+
+    if (usage <=0 ):
+      percentpaid=0.0
+    else:
+      percentpaid=100.0*(gusage/usage)
+    percentfree=100.0-percentpaid
+    item.append(percentpaid)
+    item.append(percentfree)
+    dataset.append(item)
+    #printreport(a, gusage, usage)
+
+  print(dataset)
 
 '''
     *sigh*
