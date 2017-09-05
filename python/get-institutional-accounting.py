@@ -140,7 +140,10 @@ def getmysqlusage(month, users='*'):
 
   # The data is returned as a tuple inside a list for reasons.  Yank it out and
   # convert to hours from seconds.
-  output = float(getmysqldata(query)[0][0])/3600.0
+  outtemp = getmysqldata(query)[0][0]
+  if type(outtemp) == type(None){
+    outtemp = 0
+  output = float(outtemp)/3600.0
   return output
 
 '''
